@@ -351,47 +351,56 @@ class Gol
   def read_file(fname)
 
     # 2D array grid
-    g = Array.new {Array.new}
+    grid = []
 
-    # height
     h = 0
-
-    # width
     w = 0
-
-    # counters for file
     count = 0
-    row = 0
-    col = 0
 
     # read file line-by-line into 2D array
-    File.open(fname).each do |line|
+  #   File.open(fname).each do |line|
 
-      if count == 0
-        h = line.to_i
-      elsif count == 1
-        w = line.to_i
-        g = Array.new(h) {Array.new(w)}
-      else
+  #     if count == 0
+  #       h = line.to_i
+  #     elsif count == 1
+  #       w = line.to_i
+  #       g = Array.new(h) {Array.new(w)}
+  #     else
 
-        g[row][col] = line.chomp
+  #       g[row][col] = line.chomp
 
-        if row < h
-          col += 1
+  #       if row < h
+  #         col += 1
+  #       end
+
+  #       if col == w-1
+  #         col = 0
+  #         row += 1
+  #       end
+
+  #     end
+
+  #     count += 1
+  #   end
+  #   puts h
+  #   puts w
+  #   print g
+    File.open(fname) do |f|
+      f.each_line do |line|
+        if count == 0
+          h = line.to_i
+        elsif count == 1
+           w = line.to_i
+        else
+          grid << line.split.map(&:to_i)
         end
-
-        if col == w-1
-          col = 0
-          row += 1
-        end
-
+        count += 1
       end
-
-      count += 1
     end
-    puts h
+
+    puts h 
     puts w
-    print g
+    puts grid.inspect
 
   end
 
@@ -410,4 +419,4 @@ print "Input width: "
 width = gets.to_i
 g = Gol.new(height, width)
 g.print_grid(height, width, Gol.grid)
-g.read_file("test.txt")
+g.read_file("grid")
