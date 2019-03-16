@@ -350,10 +350,55 @@ class Gol
   # read text file for starting grid
   def read_file(fname)
 
+    # 2D array grid
+    g = Array.new {Array.new}
+
+    # height
+    h = 0
+
+    # width
+    w = 0
+
+    # counters for file
+    count = 0
+    row = 0
+    col = 0
+
+    # read file line-by-line into 2D array
+    File.open(fname).each do |line|
+
+      if count == 0
+        h = line.to_i
+      elsif count == 1
+        w = line.to_i
+        g = Array.new(h) {Array.new(w)}
+      else
+
+        g[row][col] = line.chomp
+
+        if row < h
+          col += 1
+        end
+
+        if col == w-1
+          col = 0
+          row += 1
+        end
+
+      end
+
+      count += 1
+    end
+    puts h
+    puts w
+    print g
+
   end
 
   # write text file for current grid
   def write_file(fname)
+
+
 
   end
 
@@ -365,3 +410,4 @@ print "Input width: "
 width = gets.to_i
 g = Gol.new(height, width)
 g.print_grid(height, width, Gol.grid)
+g.read_file("test.txt")
