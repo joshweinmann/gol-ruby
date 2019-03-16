@@ -12,14 +12,23 @@ class Gol
   @@grid
 
   # constructor
-  def initialize(x, y)
-    width = x
-    height = y
-    @@grid = Array.new(height) {Array.new(width)}
+  def initialize
+
   end
 
   # main method
   def main
+
+    print "Enter file name: "
+    file = gets.chomp
+    @@grid = read_file(file)
+    x = @@grid.length
+    y = @@grid[0].length
+    print_grid(x, y, @@grid)
+    mutate_grid(x, y, @@grid)
+    print_grid(x, y, @@grid)
+    mutate_grid(x, y, @@grid)
+    print_grid(x, y, @@grid)
 
   end
 
@@ -42,7 +51,7 @@ class Gol
         if grid[row][col] == 1
           print "X "
         else
-          print "O "
+          print ". "
         end
         col += 1
       end
@@ -147,7 +156,7 @@ class Gol
       end
 
       # southwest
-      if grid[i + 1][j - 1]
+      if grid[i + 1][j - 1] == 1
         count += 1
       end
 
@@ -196,7 +205,7 @@ class Gol
       end
 
       # southwest
-      if grid[i + 1][j - 1]
+      if grid[i + 1][j - 1] == 1
         count += 1
       end
 
@@ -290,7 +299,7 @@ class Gol
       end
 
       # southwest
-      if grid[i + 1][j - 1]
+      if grid[i + 1][j - 1] == 1
         count += 1
       end
 
@@ -318,7 +327,7 @@ class Gol
       end
 
       # southwest
-      if grid[i + 1][j - 1]
+      if grid[i + 1][j - 1] == 1
         count += 1
       end
 
@@ -353,54 +362,13 @@ class Gol
     # 2D array grid
     grid = []
 
-    h = 0
-    w = 0
-    count = 0
-
-    # read file line-by-line into 2D array
-  #   File.open(fname).each do |line|
-
-  #     if count == 0
-  #       h = line.to_i
-  #     elsif count == 1
-  #       w = line.to_i
-  #       g = Array.new(h) {Array.new(w)}
-  #     else
-
-  #       g[row][col] = line.chomp
-
-  #       if row < h
-  #         col += 1
-  #       end
-
-  #       if col == w-1
-  #         col = 0
-  #         row += 1
-  #       end
-
-  #     end
-
-  #     count += 1
-  #   end
-  #   puts h
-  #   puts w
-  #   print g
     File.open(fname) do |f|
       f.each_line do |line|
-        if count == 0
-          h = line.to_i
-        elsif count == 1
-           w = line.to_i
-        else
-          grid << line.split.map(&:to_i)
-        end
-        count += 1
+        grid << line.split.map(&:to_i)
       end
     end
 
-    puts h 
-    puts w
-    puts grid.inspect
+    return grid
 
   end
 
@@ -413,10 +381,5 @@ class Gol
 
 end
 
-print "Input height: "
-height = gets.to_i
-print "Input width: "
-width = gets.to_i
-g = Gol.new(height, width)
-g.print_grid(height, width, Gol.grid)
-g.read_file("grid")
+g = Gol.new
+g.main
