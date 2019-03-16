@@ -49,9 +49,11 @@ class Gol
       # col loop
       while col < y
         if grid[row][col] == 1
-          print "X "
+          print get_neighbors(row, col, x, y, grid)
+          print " "
         else
-          print ". "
+          print get_neighbors(row, col, x, y, grid)
+          print " "
         end
         col += 1
       end
@@ -68,7 +70,8 @@ class Gol
   def mutate_grid(x, y, grid)
 
     # new array to temporarily store values
-    new_grid = @@grid
+    new_grid = grid
+    puts new_grid.inspect
 
     # create starting coordinates
     row = 0
@@ -114,6 +117,7 @@ class Gol
       row += 1
     end
 
+    puts new_grid.inspect
     @@grid = new_grid
 
   end
