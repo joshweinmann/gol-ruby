@@ -24,11 +24,30 @@ class Gol
     @@grid = read_file(file)
     x = @@grid.length
     y = @@grid[0].length
+
+    print "Press enter for the next iteration. Enter 'q' to quit.\n\n"
+    puts "Starting grid:"
+
     print_grid(x, y, @@grid)
-    mutate_grid(x, y, @@grid)
-    print_grid(x, y, @@grid)
-    mutate_grid(x, y, @@grid)
-    print_grid(x, y, @@grid)
+
+    # loop to run game
+    running = true
+    while running
+
+      # get input
+      input = gets.chomp
+
+      # quit
+      if input == 'q'
+        running = false
+
+      # continue
+      else
+        mutate_grid(x, y, @@grid)
+        print_grid(x, y, @@grid)
+      end
+
+    end
 
   end
 
@@ -49,11 +68,9 @@ class Gol
       # col loop
       while col < y
         if grid[row][col] == 1
-          print get_neighbors(row, col, x, y, grid)
-          print " "
+          print "X "
         else
-          print get_neighbors(row, col, x, y, grid)
-          print " "
+          print ". "
         end
         col += 1
       end
@@ -63,15 +80,13 @@ class Gol
       row += 1
     end
 
-    print "\n"
   end
 
   # mutate takes a grid and mutates that grid according to Conway's rules
   def mutate_grid(x, y, grid)
 
     # new array to temporarily store values
-    new_grid = grid
-    puts new_grid.inspect
+    new_grid = Marshal.load(Marshal.dump(grid))
 
     # create starting coordinates
     row = 0
@@ -108,6 +123,7 @@ class Gol
           if neighbors == 3
             new_grid[row][col] = 1
           end
+
         end
 
         col += 1
@@ -117,7 +133,6 @@ class Gol
       row += 1
     end
 
-    puts new_grid.inspect
     @@grid = new_grid
 
   end
