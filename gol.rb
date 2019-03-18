@@ -25,7 +25,7 @@ class Gol
     x = @@grid.length
     y = @@grid[0].length
 
-    print "Press enter for the next iteration. Enter 'q' to quit.\n\n"
+    print "Enter 'q' to quit, 'w' to write current grid to a file, or press enter for the next iteration.\n\n"
     puts "Starting grid:"
 
     print_grid(x, y, @@grid)
@@ -41,7 +41,17 @@ class Gol
       if input == 'q'
         running = false
 
-      # continue
+        # write current grid to file
+      elsif input == 'w'
+
+        print "Input file name to write to: "
+        file_name = gets.chomp
+        write_file(file_name)
+        print "\n"
+        puts "File saved"
+        running = false
+
+        # continue with next iteration
       else
         mutate_grid(x, y, @@grid)
         print_grid(x, y, @@grid)
@@ -107,16 +117,16 @@ class Gol
           if neighbors < 2
             new_grid[row][col] = 0
 
-          # 2 or 3 neighbors - lives
+            # 2 or 3 neighbors - lives
           elsif neighbors == 2 || neighbors == 3
             new_grid[row][col] = 1
 
-          # more than 3 neighbors - dies
+            # more than 3 neighbors - dies
           elsif neighbors > 3
             new_grid[row][col] = 0
           end
 
-        # "dead" cell
+          # "dead" cell
         elsif grid[row][col] == 0
 
           # more than 3 neighbors - becomes alive
@@ -394,7 +404,32 @@ class Gol
   # write text file for current grid
   def write_file(fname)
 
+    File.open(fname, 'w') do |f|
 
+      # create starting coordinates
+      row = 0
+      col = 0
+      x = @@grid.length
+      y = @@grid[0].length
+
+      # row loop
+      while row < x
+
+        # col loop
+        while col < y
+
+          f.print(@@grid[row][col])
+          f.print " "
+
+          col += 1
+        end
+
+        col = 0
+        f.print "\n"
+        row += 1
+      end
+
+    end
 
   end
 
