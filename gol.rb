@@ -61,11 +61,13 @@ class Gol
 
   end
 
+  # getter for grid array
   def self.grid
     @@grid
   end
 
   # print_grid attempts to print an x height by y width grid
+  # @params x = height, y = width, grid = grid array
   def print_grid(x, y, grid)
 
     # create starting coordinates
@@ -93,6 +95,7 @@ class Gol
   end
 
   # mutate takes a grid and mutates that grid according to Conway's rules
+  # @params x = height, y = width, grid = grid array
   def mutate_grid(x, y, grid)
 
     # new array to temporarily store values
@@ -149,6 +152,7 @@ class Gol
 
   # helper method to get number of live neighbors a cell has
   # @returns number of neighbors
+  # @params i = row, j = col, x = height, y = width, grid = grid array
   def get_neighbors(i, j, x, y, grid)
 
     count = 0
@@ -386,6 +390,8 @@ class Gol
   end
 
   # read text file for starting grid
+  # @params fname file name
+  # @return grid array
   def read_file(fname)
 
     # 2D array grid
@@ -402,6 +408,7 @@ class Gol
   end
 
   # write text file for current grid
+  # @params fname file name
   def write_file(fname)
 
     File.open(fname, 'w') do |f|
