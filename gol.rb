@@ -4,7 +4,7 @@
 #
 # A version of John Conway's classic Game of Life, written in Ruby
 #
-# Author(s): Josh Weinmann
+# Author(s): Josh Weinmann, Daniel Shamburger
 
 class Gol
 
